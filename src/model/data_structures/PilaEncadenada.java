@@ -7,7 +7,7 @@ public class PilaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		try {
 			this.addLastCola(element);
 		} catch (NullException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -18,7 +18,7 @@ public class PilaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		{
 			return this.removeLastPila();
 		} catch (VacioException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return null;

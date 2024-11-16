@@ -101,7 +101,7 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -154,7 +154,7 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -337,7 +337,7 @@ public class Modelo {
 		}
 		catch (PosException | VacioException | NullException e1) 
 		{
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		
@@ -364,7 +364,7 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException | NullException e1) 
 		{
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		
@@ -420,7 +420,7 @@ public class Modelo {
 		}
 		catch (PosException | VacioException| NullException  e) 
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -440,7 +440,7 @@ public class Modelo {
 			try {
 				fragmento+= "\n Nombre: " + ((Country) afectados.getElement(i)).getCountryName() + "\n Distancia al landing point: " + ((Country) afectados.getElement(i)).getDistlan();
 			} catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -505,7 +505,7 @@ public class Modelo {
 			} 
 			catch (PosException | VacioException| NullException  e) 
 			{
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -559,7 +559,7 @@ public class Modelo {
 			
 			catch (PosException | VacioException| NullException  e) 
 			{
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -620,7 +620,7 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException| NullException  e) 
 		{
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return tabla;

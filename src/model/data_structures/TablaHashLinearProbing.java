@@ -119,7 +119,7 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 			} 
 			catch (PosException | VacioException e) 
 			{
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -240,7 +240,7 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 			} 
 			catch (PosException | NullException | VacioException e) 
 			{
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

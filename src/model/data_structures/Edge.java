@@ -40,7 +40,7 @@ public class Edge <K extends Comparable<K>, V extends Comparable <V>> implements
 	@Override
 	public int compareTo(Edge o) 
 	{
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 }

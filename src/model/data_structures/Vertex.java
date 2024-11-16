@@ -13,7 +13,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 	{
 		this.key=id;
 		this.value=value;
-		this.arcos= new ArregloDinamico<Edge<K, V>>(1);
+		this.arcos= new ArregloDinamico<>(1);
 	}
 
 	
@@ -37,7 +37,6 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		try {
 			arcos.insertElement(edge, arcos.size() +1);
 		} catch (PosException | NullException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -76,7 +75,6 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 			} 
 			catch (PosException | VacioException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -93,7 +91,6 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 			try {
 				retorno.insertElement(arcos.getElement(i).getDestination(), retorno.size()+1);
 			} catch (PosException | NullException | VacioException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -108,7 +105,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 	
 	public void bfs()
 	{
-		ColaEncadenada<Vertex<K, V>> cola= new ColaEncadenada<Vertex<K, V>>();
+		ColaEncadenada<Vertex<K, V>> cola= new ColaEncadenada<>();
 		mark();
 		cola.enqueue(this);
 		while(cola.peek() !=null)
@@ -170,7 +167,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 					destino.topologicalOrder(pre, post, reversePost);
 				}
 			} catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
@@ -205,7 +202,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 				}
 			} 
 			catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -213,8 +210,8 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 	
 	public ILista<Edge<K, V>> mstPrimLazy()
 	{
-		ILista<Edge<K, V>> mst= new ArregloDinamico<Edge<K, V>>(1);
-		MinPQ<Float, Edge<K, V>> cola= new MinPQ<Float, Edge<K, V>>(1);
+		ILista<Edge<K, V>> mst= new ArregloDinamico<>(1);
+		MinPQ<Float, Edge<K, V>> cola= new MinPQ<>(1);
 		
 		addEdgesToMinPQ(cola, this);
 		
@@ -227,7 +224,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 				try {
 					mst.insertElement(actual, mst.size()+1);
 				} catch (PosException | NullException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				addEdgesToMinPQ(cola, dest);
@@ -247,7 +244,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 			try {
 				actual = inicio.edges().getElement(i);
 			} catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			cola.insert(actual.getWeight(), actual);
@@ -261,19 +258,19 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		* @return valor 0 si video1 y video2 tiene los mismos likes.
 		 valor negativo si video1 tiene menos likes que video2.
 		 valor positivo si video1 tiene más likes que video2. */
-		 public int compare(Vertex vertice1, Vertex vertice2) 
+		 public int compare(Vertex<String, Landing> vertice1, Vertex<String, Landing> vertice2) 
 		 {
-			 return ((String)vertice1.getId()).compareToIgnoreCase((String) vertice2.getId());
+			 return (vertice1.getId()).compareToIgnoreCase(vertice2.getId());
 		 }
 
 	}
 	 
 	public ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> minPathTree()
 	{
-		 ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> tablaResultado= new TablaHashLinearProbing<K, NodoTS<Float, Edge<K, V>>>(2);
-		 MinPQIndexada<Float, K, Edge<K, V>> colaIndexada= new MinPQIndexada<Float, K, Edge<K, V>>(20);
+		 ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> tablaResultado= new TablaHashLinearProbing<>(2);
+		 MinPQIndexada<Float, K, Edge<K, V>> colaIndexada= new MinPQIndexada<>(20);
 		 
-		 tablaResultado.put(this.key, new NodoTS<Float, Edge<K, V>>(0f, null));
+		 tablaResultado.put(this.key, new NodoTS<>(0f, null));
 		 
 		 relaxDijkstra(tablaResultado, colaIndexada, this, 0);
 		 
@@ -305,7 +302,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 					
 					if(llegadaDestino== null)
 					{
-						tablaResultado.put(destino.getId(), new NodoTS<Float, Edge<K, V>>(pesoAcumulado + peso, arcoActual));
+						tablaResultado.put(destino.getId(), new NodoTS<>(pesoAcumulado + peso, arcoActual));
 						colaIndexada.insert(peso+ pesoAcumulado, destino.getId(), arcoActual);
 						
 					}
