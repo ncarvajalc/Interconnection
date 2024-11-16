@@ -4,7 +4,7 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 {
 	private ITablaSimbolos<K, Vertex<K, V>> vertices; 
 	
-	private ILista<Edge<K, V>> arcos;
+	private ILista<Edge<K>> arcos;
 	
 	private ILista<Vertex<K, V>> verticesLista;
 	
@@ -48,17 +48,17 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 	
 	public void addEdge(K source, K dest, float weight)
 	{
-		Edge<K, V> existe= getEdge(source, dest);
+		Edge existe= getEdge(source, dest);
 		
 		if(existe==null)
 		{
 			Vertex<K, V> origin= getVertex(source);
 			
 			Vertex<K, V> destination= getVertex(dest);
-			Edge<K, V> arco1= new Edge<K, V>(origin, destination, weight);
+			Edge arco1= new Edge<Vertex<K,V>>(origin, destination, weight);
 			origin.addEdge(arco1);
 			
-			Edge<K, V> arco2=new Edge<K, V>(destination, origin, weight);
+			Edge arco2=new Edge<Vertex<K,V>>(destination, origin, weight);
 			destination.addEdge(arco2);
 			numEdges++;
 			try 
@@ -77,7 +77,7 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		return vertices.get(id);
 	}
 	
-	public Edge<K,V> getEdge(K idS, K idD)
+	public Edge<K> getEdge(K idS, K idD)
 	{
 		Vertex<K,V> origen= vertices.get(idS);
 		
@@ -91,7 +91,7 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		}
 	}
 	
-	public ILista<Edge<K,V>> adjacentEdges(K id)
+	public ILista<Edge<K>> adjacentEdges(K id)
 	{
 		Vertex<K,V> origen= vertices.get(id);
 		return origen.edges();
@@ -117,7 +117,7 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		return origen.outdegree();
 	}
 	
-	public ILista<Edge<K, V>> edges()
+	public ILista<Edge<K>> edges()
 	{
 		return arcos;
 	}
@@ -155,9 +155,9 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		unmark();
 	}
 	
-	public Edge<K, V>  arcoMin()
+	public Edge<K>  arcoMin()
 	{
-		Edge<K, V> minimo=null;
+		Edge<K> minimo=null;
 		try 
 		{
 			minimo=arcos.getElement(1);
@@ -181,9 +181,9 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		
 	}
 	
-	public Edge<K, V>  arcoMax()
+	public Edge<K>  arcoMax()
 	{
-		Edge<K, V> maximo=null;
+		Edge<K> maximo=null;
 		try 
 		{
 			float max=0;
@@ -210,7 +210,7 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 	{
 		GrafoListaAdyacencia<K, V> copia= new GrafoListaAdyacencia<K, V>(numVertices());
 		ILista<Vertex<K, V>> vertices2= vertices();
-		ILista<Edge<K, V>> arcos= edges();
+		ILista<Edge<K>> arcos= edges();
 
 		for(int i=1; i<= vertices2.size(); i++)
 		{
@@ -227,10 +227,10 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		
 		for(int i=1; i<= arcos.size(); i++)
 		{
-			Edge<K, V> actual;
+			Edge<K> actual;
 			try {
 				actual = arcos.getElement(i);
-				copia.addEdge(actual.getDestination().getId(), actual.getSource().getId(), actual.getWeight());
+				copia.addEdge(((Vertex<K,V>) actual.getDestination()).getId(), ((Vertex<K,V>) actual.getSource()).getId(), actual.getWeight());
 			} catch (PosException | VacioException e) {
 				
 				e.printStackTrace();
@@ -286,32 +286,32 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		return reversePost;
 	}
 	
-	public ILista<Edge<K, V>> mstPrimLazy(K idOrigen)
+	public ILista<Edge<K>> mstPrimLazy(K idOrigen)
 	{
-		ILista<Edge<K, V>> mst= getVertex(idOrigen).mstPrimLazy();
+		ILista<Edge<K>> mst= getVertex(idOrigen).mstPrimLazy();
 		unmark();
 		return mst;
 	}
 	
-	private ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> minPathTree(K idOrigen)
+	private ITablaSimbolos<K, NodoTS<Float, Edge<K>>> minPathTree(K idOrigen)
 	{
 		Vertex<K, V> inicio= getVertex(idOrigen);
 		return inicio.minPathTree();
 		
 	}
 	
-	public PilaEncadenada<Edge<K, V>> minPath(K idOrigen, K idDestino)
+	public PilaEncadenada<Edge<K>> minPath(K idOrigen, K idDestino)
 	{
-		ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> tree= minPathTree(idOrigen);
+		ITablaSimbolos<K, NodoTS<Float, Edge<K>>> tree= minPathTree(idOrigen);
 		
-		PilaEncadenada<Edge <K, V>> path= new PilaEncadenada<Edge<K, V>>();
+		PilaEncadenada<Edge <K>> path= new PilaEncadenada<Edge<K>>();
 		K idBusqueda= idDestino;
-		NodoTS<Float, Edge<K, V>> actual;
+		NodoTS<Float, Edge<K>> actual;
 		
 		while( (actual=tree.get(idBusqueda))!=null && actual.getValue()!=null)
 		{
 			path.push(actual.getValue());
-			idBusqueda=actual.getValue().getSource().getId();
+			idBusqueda=((Vertex<K,V>) actual.getValue().getSource()).getId();
 		}
 		
 		unmark();

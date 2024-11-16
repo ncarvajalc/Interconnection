@@ -6,7 +6,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 {
 	private K key;
 	private V value;
-	private ILista<Edge<K, V>> arcos;
+	private ILista<Edge<K>> arcos;
 	private boolean marked;
 	
 	public Vertex(K id, V value)
@@ -32,7 +32,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		return marked;
 	}
 	
-	public void addEdge( Edge<K,V> edge )
+	public void addEdge( Edge<K> edge )
 	{
 		try {
 			arcos.insertElement(edge, arcos.size() +1);
@@ -61,14 +61,16 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		return arcos.size();
 	}
 	
-	public Edge<K,V> getEdge(K vertex)
+	public Edge<K> getEdge(K vertex)
 	{
-		Edge<K,V> retorno=null;
+		Edge<K> retorno=null;
 		for(int i=1; i<=arcos.size(); i++)
 		{
 			try 
 			{
-				if(arcos.getElement(i).getDestination().getId().compareTo(vertex)==0)
+				Vertex<K,V> destino= (Vertex<K, V>) arcos.getElement(i).getDestination();
+				
+				if(destino.getId().compareTo(vertex)==0)
 				{
 					retorno= arcos.getElement(i);
 				}
@@ -89,7 +91,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		for(int i=1; i<=arcos.size(); i++)
 		{
 			try {
-				retorno.insertElement(arcos.getElement(i).getDestination(), retorno.size()+1);
+				retorno.insertElement((Vertex<K, V>) arcos.getElement(i).getDestination(), retorno.size()+1);
 			} catch (PosException | NullException | VacioException e) {
 				e.printStackTrace();
 			}
@@ -98,7 +100,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		return retorno; 
 	}
 	
-	public ILista<Edge<K,V>> edges()
+	public ILista<Edge<K>> edges()
 	{
 		return arcos;
 	}
@@ -116,7 +118,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 				Vertex<K, V> dest;
 				try 
 				{
-					dest = actual.edges().getElement(i).getDestination();
+					dest = (Vertex<K, V>) actual.edges().getElement(i).getDestination();
 					if(dest.marked)
 					{
 						mark();
@@ -131,7 +133,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		}
 	}
 	
-	public void dfs(Edge<K, V> edgeTo)
+	public void dfs(Edge<K> edgeTo)
 	{
 		mark();
 		for(int i=1; i<=arcos.size(); i++)
@@ -139,7 +141,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 			Vertex<K, V> dest;
 			try 
 			{
-				dest = arcos.getElement(i).getDestination();
+				dest = (Vertex<K, V>) arcos.getElement(i).getDestination();
 				if(!dest.marked)
 				{
 					dest.dfs(arcos.getElement(i));
@@ -161,7 +163,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		{
 			Vertex<K, V> destino;
 			try {
-				destino = arcos.getElement(i).getDestination();
+				destino = (Vertex<K, V>) arcos.getElement(i).getDestination();
 				if(!destino.getMark())
 				{
 					destino.topologicalOrder(pre, post, reversePost);
@@ -195,7 +197,7 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 			Vertex<K, V> actual;
 			try 
 			{
-				actual = arcos.getElement(i).getDestination();
+				actual = (Vertex<K, V>) arcos.getElement(i).getDestination();
 				if(!actual.getMark())
 				{
 					actual.getSCC(tabla, idComponente);
@@ -208,17 +210,17 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		}
 	}
 	
-	public ILista<Edge<K, V>> mstPrimLazy()
+	public ILista<Edge<K>> mstPrimLazy()
 	{
-		ILista<Edge<K, V>> mst= new ArregloDinamico<>(1);
-		MinPQ<Float, Edge<K, V>> cola= new MinPQ<>(1);
+		ILista<Edge<K>> mst= new ArregloDinamico<>(1);
+		MinPQ<Float, Edge<K>> cola= new MinPQ<>(1);
 		
 		addEdgesToMinPQ(cola, this);
 		
 		while(!cola.isEmpty())
 		{
-			Edge<K, V> actual= cola.delMin(). getValue();
-			Vertex<K, V> dest= actual.getDestination();
+			Edge<K> actual= cola.delMin(). getValue();
+			Vertex<K, V> dest= (Vertex<K, V>) actual.getDestination();
 			if(!dest.marked)
 			{
 				try {
@@ -234,13 +236,13 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		
 	}
 	
-	private void addEdgesToMinPQ(MinPQ<Float, Edge<K, V>> cola, Vertex<K, V> inicio)
+	private void addEdgesToMinPQ(MinPQ<Float, Edge<K>> cola, Vertex<K, V> inicio)
 	{
 		inicio.mark();
 		
 		for(int i=1; i<= inicio.edges().size(); i++)
 		{
-			Edge<K, V> actual=null;
+			Edge<K> actual=null;
 			try {
 				actual = inicio.edges().getElement(i);
 			} catch (PosException | VacioException e) {
@@ -265,10 +267,10 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 
 	}
 	 
-	public ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> minPathTree()
+	public ITablaSimbolos<K, NodoTS<Float, Edge<K>>> minPathTree()
 	{
-		 ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> tablaResultado= new TablaHashLinearProbing<>(2);
-		 MinPQIndexada<Float, K, Edge<K, V>> colaIndexada= new MinPQIndexada<>(20);
+		 ITablaSimbolos<K, NodoTS<Float, Edge<K>>> tablaResultado= new TablaHashLinearProbing<>(2);
+		 MinPQIndexada<Float, K, Edge<K>> colaIndexada= new MinPQIndexada<>(20);
 		 
 		 tablaResultado.put(this.key, new NodoTS<>(0f, null));
 		 
@@ -276,29 +278,29 @@ public class Vertex<K extends Comparable<K>,V  extends Comparable <V>> implement
 		 
 		 while(!colaIndexada.isEmpty())
 		 {
-			 NodoTS<Float, Edge<K, V>> actual= colaIndexada.delMin();
-			 Edge<K, V> arcoActual= actual.getValue();
+			 NodoTS<Float, Edge<K>> actual= colaIndexada.delMin();
+			 Edge<K> arcoActual= actual.getValue();
 			 float pesoActual= actual.getKey();
-			 relaxDijkstra(tablaResultado, colaIndexada, arcoActual.getDestination(), pesoActual);
+			 relaxDijkstra(tablaResultado, colaIndexada, (Vertex<K, V>) arcoActual.getDestination(), pesoActual);
 		 }
 		 
 		 return tablaResultado;
 	}
 	
-	public void relaxDijkstra(ITablaSimbolos<K, NodoTS<Float, Edge<K, V>>> tablaResultado, MinPQIndexada<Float, K, Edge<K, V>> colaIndexada, Vertex<K, V> actual, float pesoAcumulado)
+	public void relaxDijkstra(ITablaSimbolos<K, NodoTS<Float, Edge<K>>> tablaResultado, MinPQIndexada<Float, K, Edge<K>> colaIndexada, Vertex<K, V> actual, float pesoAcumulado)
 	{
 		actual.mark();
 		for(int i=1; i<=actual.edges().size(); i++)
 		{
-			Edge<K, V> arcoActual;
+			Edge<K> arcoActual;
 			try 
 			{
 				arcoActual = actual.edges().getElement(i);
-				Vertex<K, V> destino= arcoActual.getDestination();
+				Vertex<K, V> destino= (Vertex<K, V>) arcoActual.getDestination();
 				float peso= arcoActual.getWeight();
 				if(!destino.getMark())
 				{
-					NodoTS<Float, Edge<K, V>>llegadaDestino= tablaResultado.get(destino.getId());
+					NodoTS<Float, Edge<K>>llegadaDestino= tablaResultado.get(destino.getId());
 					
 					if(llegadaDestino== null)
 					{

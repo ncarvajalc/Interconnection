@@ -227,30 +227,32 @@ public class Modelo {
 		while(!pila.isEmpty())
 		{
 			Edge arco= ((Edge)pila.pop());
-
-			if(arco.getSource().getInfo().getClass().getName().equals("model.data_structures.Landing"))
+			Vertex origen = (Vertex) arco.getSource();
+			Vertex destino = (Vertex) arco.getDestination();
+			
+			if(origen.getInfo().getClass().getName().equals("model.data_structures.Landing"))
 			{
-				longorigen=((Landing)arco.getSource().getInfo()).getLongitude();
-				latorigen=((Landing)arco.getSource().getInfo()).getLongitude();
-				origennombre=((Landing)arco.getSource().getInfo()).getLandingId();
+				longorigen=((Landing)origen.getInfo()).getLongitude();
+				latorigen=((Landing)origen.getInfo()).getLongitude();
+				origennombre=((Landing)origen.getInfo()).getLandingId();
 			}
-			if(arco.getSource().getInfo().getClass().getName().equals("model.data_structures.Country"))
+			if(origen.getInfo().getClass().getName().equals("model.data_structures.Country"))
 			{
-				longorigen=((Country)arco.getSource().getInfo()).getLongitude();
-				latorigen=((Country)arco.getSource().getInfo()).getLongitude();
-				origennombre=((Country)arco.getSource().getInfo()).getCapitalName();
+				longorigen=((Country)origen.getInfo()).getLongitude();
+				latorigen=((Country)origen.getInfo()).getLongitude();
+				origennombre=((Country)origen.getInfo()).getCapitalName();
 			}
-			if (arco.getDestination().getInfo().getClass().getName().equals("model.data_structures.Landing"))
+			if (destino.getInfo().getClass().getName().equals("model.data_structures.Landing"))
 			{
-				latdestino=((Landing)arco.getDestination().getInfo()).getLatitude();
-				longdestino=((Landing)arco.getDestination().getInfo()).getLatitude();
-				destinonombre=((Landing)arco.getDestination().getInfo()).getLandingId();
+				latdestino=((Landing)destino.getInfo()).getLatitude();
+				longdestino=((Landing)destino.getInfo()).getLatitude();
+				destinonombre=((Landing)destino.getInfo()).getLandingId();
 			}
-			if(arco.getDestination().getInfo().getClass().getName().equals("model.data_structures.Country"))
+			if(destino.getInfo().getClass().getName().equals("model.data_structures.Country"))
 			{
-				longdestino=((Country)arco.getDestination().getInfo()).getLatitude();
-				latdestino=((Country)arco.getDestination().getInfo()).getLatitude();
-				destinonombre=((Country)arco.getDestination().getInfo()).getCapitalName();
+				longdestino=((Country)destino.getInfo()).getLatitude();
+				latdestino=((Country)destino.getInfo()).getLatitude();
+				destinonombre=((Country)destino.getInfo()).getCapitalName();
 			}
 
 			distancia = distancia(longdestino,latdestino, longorigen, latorigen);
@@ -292,14 +294,15 @@ public class Modelo {
 			ILista candidatos= new ArregloDinamico<>(1);
 			for(int i=1; i<= lista2.size(); i++)
 			{
-				Edge arco= ((Edge) lista2.getElement(i));
+				Edge arco = ((Edge) lista2.getElement(i));
+				Vertex destino= (Vertex) arco.getDestination();
 				distancia+= arco.getWeight();
 				
 				candidatos.insertElement(arco.getSource(), candidatos.size()+1);
 				
-				candidatos.insertElement(arco.getDestination(), candidatos.size()+1);
+				candidatos.insertElement(destino, candidatos.size()+1);
 				
-				tabla.put(arco.getDestination().getId(),arco.getSource() );
+				tabla.put(destino.getId(),arco.getSource() );
 			}
 			
 			ILista unificado= unificar(candidatos, "Vertice");
@@ -377,7 +380,7 @@ public class Modelo {
 				
 				for(int j=1; j<= arcos.size(); j++)
 				{
-					Vertex vertice2= ((Edge) arcos.getElement(j)).getDestination();
+					Vertex vertice2= (Vertex) ((Edge) arcos.getElement(j)).getDestination();
 					
 					Country pais=null;
 					if (vertice2.getInfo().getClass().getName().equals("model.data_structures.Landing"))
