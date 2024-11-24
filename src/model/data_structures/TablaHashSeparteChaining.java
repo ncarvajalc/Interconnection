@@ -2,8 +2,6 @@ package model.data_structures;
 
 import java.text.DecimalFormat;
 
-import sun.security.util.Debug;
-
 public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Comparable <V>> implements ITablaSimbolos<K, V >
 {
 	
@@ -29,7 +27,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 			} 
 			catch (PosException | NullException e) 
 			{
-				e.printStackTrace();
 			}
 		}
 	}
@@ -44,18 +41,17 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 			
 			if(listasc!=null && !contains(key))
 			{
-				listasc.insertElement(new NodoTS<K,V>(key, value), listasc.size()+1);
+				listasc.insertElement(new NodoTS<>(key, value), listasc.size()+1);
 			}
 			else
 			{
-				listaNodos.changeInfo(posicion, new ArregloDinamico<NodoTS<K,V>>(1));
+				listaNodos.changeInfo(posicion, new ArregloDinamico<>(1));
 				listasc=listaNodos.getElement(posicion);
-				listasc.insertElement(new NodoTS<K,V>(key, value), listasc.size()+1);
+				listasc.insertElement(new NodoTS<>(key, value), listasc.size()+1);
 			}
 		} 
 		catch (PosException | VacioException | NullException e) 
 		{
-			e.printStackTrace();
 		}
 		
 		tamanoAct++;
@@ -92,7 +88,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		} 
 		catch (PosException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 		
 		return retornar;
@@ -120,7 +115,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		} 
 		catch (PosException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 		tamanoAct--;
 		return retornar;
@@ -278,7 +272,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		}
 		catch (NullException| VacioException| PosException e)
 		{
-			e.printStackTrace();
 		}
 		
 		cantidadRehash++;
@@ -330,6 +323,7 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 
     }
     
+        @Override
     public String toString()
     {
     	String retorno="";

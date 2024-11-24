@@ -37,7 +37,7 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private ILista datos;
+	private final ILista datos;
 
 	private GrafoListaAdyacencia grafo;
 

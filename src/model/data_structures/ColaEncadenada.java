@@ -7,8 +7,6 @@ public class ColaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		try {
 			this.addLastCola(element);
 		} catch (NullException e) {
-			
-			e.printStackTrace();
 		}
 	}
 	
@@ -19,8 +17,6 @@ public class ColaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		{
 			retorno= this.deleteElement(1);
 		} catch (PosException | VacioException e) {
-			
-			e.printStackTrace();
 		}
 		
 		return retorno;
@@ -32,8 +28,6 @@ public class ColaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		try {
 			retorno = this.getElement(1);
 		} catch (PosException | VacioException e) {
-			
-			e.printStackTrace();
 		}
 		
 		return retorno;

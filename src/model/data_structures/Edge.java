@@ -2,8 +2,8 @@ package model.data_structures;
 
 public class Edge<K extends Comparable<K>> implements Comparable<Edge<K>>
 {
-	private K source;
-	private K destination;
+	private final K source;
+	private final K destination;
 	private float weight;
 	
 	public Edge(K source, K destination, float weight)

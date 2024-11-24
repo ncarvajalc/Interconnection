@@ -1,16 +1,9 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Scanner;
 
-import model.data_structures.ILista;
-import model.data_structures.NullException;
-import model.data_structures.PosException;
-import model.data_structures.VacioException;
-import model.data_structures.YoutubeVideo;
 import model.logic.Modelo;
-import utils.Ordenamiento;
 import view.View;
 
 public class Controller<T> {
@@ -19,7 +12,7 @@ public class Controller<T> {
 	private Modelo modelo;
 	
 	/* Instancia de la Vista*/
-	private View view;
+	private final View view;
 	
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -48,8 +41,6 @@ public class Controller<T> {
 				{
 					modelo.cargar();
 				} catch (IOException e) {
-
-					e.printStackTrace();
 				}
 				view.printModelo(modelo);	
 

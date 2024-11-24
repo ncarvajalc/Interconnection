@@ -1,7 +1,5 @@
 package model.data_structures;
 
-import java.util.Comparator;
-
 public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 
 	private Nodo<T> first;
@@ -19,25 +17,27 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 	
 	public ListaEncadenada(T element)
 	{
-		first= new Nodo<T>(element);
+		first= new Nodo<>(element);
 		last= first;
 		size=1;
 	}
 	
 	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
 	//isEmpty o que la posición no sea válida
+        @Override
 	public void addFirst(T element)
 	{
-		Nodo<T> actual= new Nodo<T>(element);
+		Nodo<T> actual= new Nodo<>(element);
 		actual.setNext(first);
 		first=actual;
 	}
 	
 	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
 	//isEmpty o que la posición no sea válida
+        @Override
 	public void addLast(T element)
 	{
-		Nodo<T> actual= new Nodo<T>(element);
+		Nodo<T> actual= new Nodo<>(element);
 		last.setNext(actual);
 		last=actual;
 		actual.setNext(null);
@@ -56,13 +56,13 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		{
 			if (first==null)
 			{
-				 Nodo<T> actual= new Nodo<T>(element);
+				 Nodo<T> actual= new Nodo<>(element);
 				 last=actual;
 				 first=actual;
 			}
 			else
 			{
-				Nodo<T> actual= new Nodo<T>(element);
+				Nodo<T> actual= new Nodo<>(element);
 				last.setNext(actual);
 				last=actual;
 				actual.setNext(null);
@@ -71,9 +71,10 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		}
 	}
 	
+        @Override
 	public void insertElement(T elemento, int pos) throws PosException, NullException
 	{
-		 Nodo<T> nuevo = new Nodo<T>(elemento);
+		 Nodo<T> nuevo = new Nodo<>(elemento);
 		 
 		 if (pos<1 || pos-1 >size)
 		 {
@@ -115,6 +116,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 	
 	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
 	//isEmpty o que la posición no sea válida
+        @Override
 	public T removeFirst() throws VacioException
 	{
 		T primero= firstElement();
@@ -129,6 +131,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 	
 	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
 	//isEmpty o que la posición no sea válida
+        @Override
 	public T removeLast()
 	{
 		Nodo<T> penultimo= first;
@@ -191,6 +194,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		
 	}
 	
+        @Override
 	public T deleteElement(int pos) throws PosException, VacioException
 	{
 		T retorno=null;
@@ -242,6 +246,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		return retorno;
 	}
 	
+        @Override
 	public T firstElement() throws VacioException
 	{
 		if (isEmpty())
@@ -254,6 +259,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		}
 	}
 	
+        @Override
 	public T lastElement()
 	{
 		if (isEmpty())
@@ -267,6 +273,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		
 	}
 	
+        @Override
 	public T getElement(int pos) throws PosException, VacioException
 	{
 		if (pos<1 || pos >size)
@@ -289,16 +296,19 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		}
 	}
 	
+        @Override
 	public int size()
 	{
 		return size;
 	}
 	
+        @Override
 	public boolean isEmpty()
 	{
 		return first==null;
 	}
 	
+        @Override
 	public int isPresent(T element) throws VacioException, NullException, PosException
 	{
 		int pos =-1;
@@ -326,6 +336,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		return pos+1;
 	}
 	
+        @Override
 	public void exchange(int pos1, int pos2) throws PosException, VacioException
 	{
 		 if (pos1>size|| pos2>size || pos1<1 || pos2<1)
@@ -360,6 +371,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		}
 	}
 	
+        @Override
 	public void changeInfo(int pos, T element) throws PosException, VacioException, NullException
 	{
 		if (pos<1 || pos >size)
@@ -388,6 +400,7 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 
 	}
 	
+        @Override
 	public ILista<T> sublista(int pos, int numElementos) throws PosException, VacioException, NullException
 	{
 		if (isEmpty())

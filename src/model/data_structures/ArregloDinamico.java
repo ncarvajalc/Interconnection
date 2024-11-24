@@ -29,6 +29,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
         
 		//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
 		//isEmpty o que la posición no sea válida
+    @Override
 		public void addLast( T dato )
         {
                if ( tamanoAct == tamanoMax )
@@ -36,10 +37,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
                     tamanoMax = 2 * tamanoMax;
                     T [ ] copia = elementos;
                     elementos = (T[])new Comparable[tamanoMax];
-                    for ( int i = 0; i < tamanoAct; i++)
-                    {
-                     	 elementos[i] = copia[i];
-                    } 
+                   System.arraycopy(copia, 0, elementos, 0, tamanoAct); 
                }	
                elementos[tamanoAct] = dato;
        }
@@ -48,10 +46,12 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			return tamanoMax;
 		}
 
+        @Override
 		public int size() {
 			return tamanoAct;
 		}
 
+    @Override
 		public T getElement(int pos) throws PosException, VacioException 
 		{
 			if (pos<1)
@@ -172,10 +172,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 	            elementos = (T[])new Comparable[tamanoMax];
 	                 
 	            elementos[0]=element;
-	            for ( int i = 0; i < tamanoAct; i++)
-	            {
-	                 elementos[i+1] = copia[i];
-	            } 
+                            System.arraycopy(copia, 0, elementos, 1, tamanoAct); 
 			}
 			else
 			{
@@ -215,10 +212,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		            T [ ] copia = elementos;
 		            elementos = (T[])new Comparable[tamanoMax];
 		            
-		            for (int i=0; i<pos-1; i++)
-		            {
-		            	elementos[i]= copia[i];
-		            }
+                                    System.arraycopy(copia, 0, elementos, 0, pos-1);
 		            
 		            elementos[pos-1]=elemento;
 		            
@@ -300,10 +294,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 					T [ ] copia = elementos;
 					elementos= (T[])new Comparable[tamanoMax];
 				
-					for (int i=0; i<pos-1; i++)
-					{
-						elementos[i]=copia[i];
-					}
+                                    System.arraycopy(copia, 0, elementos, 0, pos-1);
 					
 					for(int i=pos-1; i<tamanoAct; i++)
 					{
@@ -446,6 +437,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			
 		}
 		
+        @Override
 		public ILista<T> sublista(int pos, int numElementos) throws PosException, VacioException, NullException
 		{
 			if (isEmpty())

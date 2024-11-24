@@ -3,24 +3,23 @@ package model.data_structures;
 public class TablaSimbolos <K extends Comparable<K>, V extends Comparable <V>> implements ITablaSimbolos<K, V>
 {
 
-	private ILista<NodoTS<K, V>> listaNodos; 
+	private final ILista<NodoTS<K, V>> listaNodos; 
 
 	public TablaSimbolos()
 	{
 		listaNodos= new ArregloDinamico(1);
 	}
 
+        @Override
 	public void put(K key, V value) 
 	{
-		NodoTS<K, V> agregar = new NodoTS<K, V>(key, value);
+		NodoTS<K, V> agregar = new NodoTS<>(key, value);
 		try 
 		{
 			listaNodos.insertElement(agregar, size()+1);
 		} 
 		catch (PosException | NullException e) 
 		{
-			
-			e.printStackTrace();
 		}
 	}
 
@@ -51,8 +50,6 @@ public class TablaSimbolos <K extends Comparable<K>, V extends Comparable <V>> i
 			} 
 			catch (PosException | VacioException e) 
 			{
-				
-				e.printStackTrace();
 			}
 		}
 		return null;
@@ -70,8 +67,6 @@ public class TablaSimbolos <K extends Comparable<K>, V extends Comparable <V>> i
 		} 
 		catch (VacioException | NullException | PosException e) 
 		{
-			
-			e.printStackTrace();
 		}
 
 		return eliminado1; 
@@ -88,8 +83,6 @@ public class TablaSimbolos <K extends Comparable<K>, V extends Comparable <V>> i
 		} 
 		catch (VacioException | NullException | PosException e) 
 		{
-			
-			e.printStackTrace();
 		}
 
 		if (pos>0)
@@ -123,8 +116,6 @@ public class TablaSimbolos <K extends Comparable<K>, V extends Comparable <V>> i
 			} 
 			catch (PosException | NullException | VacioException e) 
 			{
-				
-				e.printStackTrace();
 			}
 		}
 		return lista;
@@ -142,13 +133,12 @@ public class TablaSimbolos <K extends Comparable<K>, V extends Comparable <V>> i
 			} 
 			catch (PosException | VacioException| NullException e) 
 			{
-				
-				e.printStackTrace();
 			}
 		}
 		return lista;
 	}
 
+        @Override
 	public String toString()
 	{
 		return  "Cantidad de duplas: "+ size();

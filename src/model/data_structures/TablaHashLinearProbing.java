@@ -26,7 +26,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 			} 
 			catch (PosException | NullException e) 
 			{
-				e.printStackTrace();
 			}
 		}
 	}
@@ -43,14 +42,13 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 				posicion=getNextEmpty(posicion);
 			}
 
-			NodoTS<K, V> nuevo= new NodoTS<K, V>(key, value);
+			NodoTS<K, V> nuevo= new NodoTS<>(key, value);
 			listaNodos.changeInfo(posicion, nuevo);
 			tamanoAct++;
 
 		} 
 		catch (PosException | VacioException| NullException e) 
 		{
-			e.printStackTrace();
 		}
 		double tam= tamanoAct;
 		double tam2=tamanoTabla;
@@ -80,7 +78,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 		} 
 		catch (PosException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 		return posicionRetornar;
 	}
@@ -119,8 +116,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 			} 
 			catch (PosException | VacioException e) 
 			{
-				
-				e.printStackTrace();
 			}
 		}
 
@@ -172,7 +167,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 		}
 		catch (PosException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 
 		return retornar;
@@ -218,7 +212,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 		}
 		catch (PosException | NullException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 
 		return lista;
@@ -240,8 +233,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 			} 
 			catch (PosException | NullException | VacioException e) 
 			{
-				
-				e.printStackTrace();
 			}
 		}
 		return lista;
@@ -271,7 +262,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 		}
 		catch (PosException | NullException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 		
 		return nodos;
@@ -303,7 +293,6 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 		}
 		catch (NullException| VacioException| PosException e)
 		{
-			e.printStackTrace();
 		}
 		
 		cantidadRehash++;
@@ -365,6 +354,7 @@ public class TablaHashLinearProbing <K extends Comparable<K>, V extends Comparab
 		return tamanoTabla;
 	}
 
+        @Override
 	public String toString()
 	{
 		String retorno="";
