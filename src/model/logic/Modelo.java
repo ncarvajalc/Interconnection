@@ -11,8 +11,6 @@ import org.apache.commons.csv.CSVRecord;
 import model.data_structures.ArregloDinamico;
 import model.data_structures.Country;
 import model.data_structures.Country.ComparadorXKm;
-import model.logic.utils.Distance;
-import model.logic.utils.Merger;
 import model.data_structures.Edge;
 import model.data_structures.GrafoListaAdyacencia;
 import model.data_structures.ILista;
@@ -27,6 +25,8 @@ import model.data_structures.TablaHashSeparteChaining;
 import model.data_structures.VacioException;
 import model.data_structures.Vertex;
 import model.data_structures.YoutubeVideo;
+import model.logic.utils.Distance;
+import model.logic.utils.Merger;
 import utils.Ordenamiento;
 
 /**
@@ -79,6 +79,7 @@ public class Modelo {
 		return (YoutubeVideo) datos.getElement(i);
 	}
 
+        @Override
 	public String toString() {
 		String fragmento = "Info básica:";
 
@@ -100,8 +101,6 @@ public class Modelo {
 					+ pais.getPopulation() +
 					"\n Usuarios: " + pais.getUsers();
 		} catch (PosException | VacioException e) {
-
-			e.printStackTrace();
 		}
 
 		return fragmento;
@@ -140,8 +139,6 @@ public class Modelo {
 				fragmento += "\n Los landing points no pertenecen al mismo clúster";
 			}
 		} catch (PosException | VacioException e) {
-
-			e.printStackTrace();
 		}
 
 		return fragmento;
@@ -172,7 +169,6 @@ public class Modelo {
 					contador++;
 				}
 			} catch (PosException | VacioException e) {
-				e.printStackTrace();
 			}
 
 		}
@@ -327,8 +323,6 @@ public class Modelo {
 			Country paisoriginal = (Country) paises.get(((Landing) ((Vertex) lista.getElement(1)).getInfo()).getPais());
 			countries.insertElement(paisoriginal, countries.size() + 1);
 		} catch (PosException | VacioException | NullException e1) {
-
-			e1.printStackTrace();
 		}
 
 		for (int i = 1; i <= lista.size(); i++) {
@@ -364,7 +358,7 @@ public class Modelo {
 
 		Comparator<Country> comparador = null;
 
-		Ordenamiento<Country> algsOrdenamientoEventos = new Ordenamiento<Country>();
+		Ordenamiento<Country> algsOrdenamientoEventos = new Ordenamiento<>();
 
 		comparador = new ComparadorXKm();
 
@@ -374,8 +368,6 @@ public class Modelo {
 				algsOrdenamientoEventos.ordenarMergeSort(unificado, comparador, true);
 			}
 		} catch (PosException | VacioException | NullException e) {
-
-			e.printStackTrace();
 		}
 
 		return unificado;
@@ -392,8 +384,6 @@ public class Modelo {
 				fragmento += "\n Nombre: " + ((Country) afectados.getElement(i)).getCountryName()
 						+ "\n Distancia al landing point: " + ((Country) afectados.getElement(i)).getDistlan();
 			} catch (PosException | VacioException e) {
-
-				e.printStackTrace();
 			}
 		}
 
@@ -428,7 +418,6 @@ public class Modelo {
 				float population = Float.parseFloat(record.get(6).replace(".", ""));
 
 				double users = Double.parseDouble(record.get(7).replace(".", ""));
-				;
 
 				Country pais = new Country(countryName, capitalName, latitude, longitude, code, continentName,
 						population, users);
@@ -444,7 +433,6 @@ public class Modelo {
 		Reader in2 = new FileReader("./data/landing_points.csv");
 		Iterable<CSVRecord> records2 = CSVFormat.RFC4180.withHeader().parse(in2);
 
-		int contador2 = 1;
 
 		for (CSVRecord record2 : records2) {
 
@@ -466,7 +454,6 @@ public class Modelo {
 
 			points.put(landingId, landing);
 
-			Country pais = null;
 		}
 
 		Reader in3 = new FileReader("./data/connections.csv");
@@ -474,7 +461,6 @@ public class Modelo {
 
 		Distance dist = new Distance();
 
-		int contador3 = 1;
 		for (CSVRecord record3 : records3) {
 			String origin = record3.get(0);
 
@@ -482,9 +468,7 @@ public class Modelo {
 
 			String cableid = record3.get(3);
 
-			String[] lengths = record3.get(4).split(" ");
 
-			String length = lengths[0];
 
 			Landing landing1 = (Landing) points.get(origin);
 
@@ -583,7 +567,6 @@ public class Modelo {
 
 				}
 			} catch (PosException | NullException e) {
-				e.printStackTrace();
 			}
 
 		}
@@ -604,7 +587,6 @@ public class Modelo {
 				}
 			}
 		} catch (PosException | VacioException e) {
-			e.printStackTrace();
 		}
 
 	}

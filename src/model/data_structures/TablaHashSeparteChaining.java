@@ -173,8 +173,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		}
 		catch (PosException | NullException | VacioException e) 
 		{
-			
-			e.printStackTrace();
 		}
 		
 		return lista;
@@ -204,7 +202,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		}
 		catch (PosException | NullException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 		
 		return lista;
@@ -213,7 +210,7 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 	@Override
 	public ILista<NodoTS<K, V>> darListaNodos() 
 	{
-		ILista<NodoTS<K, V>> nodos= new ArregloDinamico<NodoTS<K, V>>(1);
+		ILista<NodoTS<K, V>> nodos= new ArregloDinamico<>(1);
 		try 
 		{
 			for (int i=1; i<= tamanoTabla; i++)
@@ -234,7 +231,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		}
 		catch (PosException | NullException | VacioException e) 
 		{
-			e.printStackTrace();
 		}
 		
 		return nodos;
